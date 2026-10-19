@@ -6,3 +6,46 @@ function updateDays(){const max=plan.value==='240'?12:24,old=Number(days.value)|
 plan.addEventListener('change',updateDays);months.addEventListener('input',calc);months.addEventListener('change',()=>{months.value=String(calculate(plan.value,months.value,days.value).m);calc()});days.addEventListener('change',calc);updateDays();
 document.querySelectorAll('.choose').forEach(a=>a.addEventListener('click',()=>document.querySelector('#interest').value=a.dataset.plan));
 document.querySelector('#form').addEventListener('submit',e=>{e.preventDefault();e.target.reset();const s=document.querySelector('#success');s.style.display='block';s.focus()});
+
+// 리본케어 모바일 간병일지 풀버전 모달 연동
+const diaryModal = document.querySelector('#diaryModal');
+const diaryIframe = document.querySelector('#diaryIframe');
+const closeDiaryBtn = document.querySelector('#closeDiaryBtn');
+
+function openDiaryModal() {
+  if (!diaryModal) return;
+  if (diaryIframe && (!diaryIframe.getAttribute('src') || diaryIframe.getAttribute('src') === '')) {
+    diaryIframe.setAttribute('src', 'mobile-care-diary.html');
+  }
+  diaryModal.classList.add('is-active');
+  diaryModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDiaryModal() {
+  if (!diaryModal) return;
+  diaryModal.classList.remove('is-active');
+  diaryModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.btn-open-diary').forEach(btn => {
+  btn.addEventListener('click', openDiaryModal);
+});
+
+if (closeDiaryBtn) {
+  closeDiaryBtn.addEventListener('click', closeDiaryModal);
+}
+
+if (diaryModal) {
+  diaryModal.addEventListener('click', e => {
+    if (e.target === diaryModal) closeDiaryModal();
+  });
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && diaryModal && diaryModal.classList.contains('is-active')) {
+    closeDiaryModal();
+  }
+});
+
