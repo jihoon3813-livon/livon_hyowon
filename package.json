@@ -1,0 +1,12 @@
+{
+  "name": "livon-hyowon-landing",
+  "version": "1.0.0",
+  "description": "리본케어 × 효원상조 간병상품 모바일 랜딩페이지",
+  "scripts": {
+    "start": "node serve.js",
+    "dev": "node serve.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
